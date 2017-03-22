@@ -2,7 +2,7 @@
   "name": "deployer",
   "version": "0.0.0",
   "description": "Deploy script for Lusk apps",
-  "main": "index.js",
+  "main": "cli/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/luskhq/deployer.git"
@@ -17,10 +17,14 @@
     "caporal": "^0.3.0",
     "deepmerge": "^1.3.2",
     "mustache": "^2.3.0",
-    "now-client": "^0.7.0",
-    "ramda": "^0.23.0"
+    "now": "^4.10.2",
+    "ramda": "^0.23.0",
+    "simple-encryptor": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0"
   },
   "bin": {
-    "deployer": "index.js"
+    "deployer": "cli/index.js"
   }
 }
