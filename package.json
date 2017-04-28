@@ -22,7 +22,8 @@
     "simple-encryptor": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^3.18.0"
+    "eslint": "^3.18.0",
+    "eslint-config-lusk": "^1.0.3"
   },
   "bin": {
     "deployer": "cli/index.js"
