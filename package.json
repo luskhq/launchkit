@@ -1,6 +1,6 @@
 {
   "name": "deployer",
-  "version": "0.0.0",
+  "version": "0.1.0-0",
   "description": "Deploy script for Lusk apps",
   "main": "cli/index.js",
   "repository": {
