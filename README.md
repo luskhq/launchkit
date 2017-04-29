@@ -1,13 +1,19 @@
-# Deployer
+<!--
+TODO:
+- Add `protected` env feature to prevent accidental production deploys
+- `remove` command should be able to remove entire env
+-->
+
+# LaunchKit
 
 ## Usage
 
 ```sh
 # Install gloablly
-npm install -g deployer
+npm install -g launchkit@alpha
 
 # See detailed usage instructions
-deployer -h
+launchkit -h
 ```
 
 ## Config
@@ -46,37 +52,36 @@ NowProvider {
 
 ## Example Config File
 
-```js
-{
-  "master": {
-    "config": {
-      "alias": "{{CIRCLE_PROJECT_REPONAME}}.now.sh",
-      "vars": {
-        "DATA_SERVICE": "https://lusk-data-service.now.sh",
-        "CAREERS_SITE": "https://lusk-careers-site.now.sh",
-        "PUBLIC_API": "https://lusk-public-api.now.sh"
-      }
-    }
-  },
-  "rich-text": {
-    "config": {
-      "vars": {
-        "DATA_SERVICE": "https://lusk-data-service-rich-text.now.sh",
-        "CAREERS_SITE": "https://lusk-careers-site-rich-text.now.sh"
-      }
-    }
-  },
-  "_default": {
-    "provider": "test",
-    "config": {
-      "token": "sometoken",
-      "alias": "{{CIRCLE_PROJECT_REPONAME}}-{{CIRCLE_BRANCH}}.now.sh",
-      "vars": {
-        "DATA_SERVICE": "https://lusk-data-service-dev.now.sh",
-        "CAREERS_SITE": "https://lusk-careers-site-dev.now.sh",
-        "PUBLIC_API": "https://lusk-public-api-dev.now.sh"
-      }
-    }
-  }
-}
+```yaml
+_default:
+  deployer: now
+  options:
+    alias: '{{CIRCLE_PROJECT_REPONAME}}-{{CIRCLE_BRANCH}}.luskapps.net'
+    token: XxMTU7FBlszCFkMnzsAGhnho
+    vars:
+      CAREERS_SITE: 'https://careers-site-dev.luskapps.net'
+      DATA_SERVICE: 'https://data-service-dev.luskapps.net'
+      PUBLIC_API: 'https://public-api-dev.luskapps.net'
+dev:
+  options:
+    alias: '{{CIRCLE_PROJECT_REPONAME}}-dev.luskapps.net'
+    vars:
+      CAREERS_SITE: 'https://careers-site.luskapps.net'
+      DATA_SERVICE: 'https://data-service.luskapps.net'
+      PUBLIC_API: 'https://public-api.luskapps.net'
+      SUPER_SECRET_TOKEN: beep
+production:
+  options:
+    alias: '{{CIRCLE_PROJECT_REPONAME}}.luskapps.net'
+    vars:
+      CAREERS_SITE: 'https://careers-site.luskapps.net'
+      DATA_SERVICE: 'https://data-service.luskapps.net'
+      PUBLIC_API: 'https://public-api.luskapps.net'
+      SUPER_SECRET_TOKEN: foo
+rich-text:
+  options:
+    vars:
+      CAREERS_SITE: 'https://careers-site-rich-text.luskapps.net'
+      DATA_SERVICE: 'https://data-service-rich-text.luskapps.net'
+
 ```

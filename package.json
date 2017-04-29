@@ -8,14 +8,16 @@
     "url": "git+https://github.com/luskhq/deployer.git"
   },
   "author": "Artur Muller <me@arturmuller.com> (http://arturmuller.com)",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/luskhq/deployer/issues"
   },
   "homepage": "https://github.com/luskhq/deployer#readme",
   "dependencies": {
     "caporal": "^0.3.0",
+    "chalk": "^1.1.3",
     "deepmerge": "^1.3.2",
+    "js-yaml": "^3.8.3",
     "mustache": "^2.3.0",
     "now": "^4.10.2",
     "ramda": "^0.23.0",
@@ -26,6 +28,6 @@
     "eslint-config-lusk": "^1.0.3"
   },
   "bin": {
-    "deployer": "cli/index.js"
+    "launchkit": "cli/index.js"
   }
 }
