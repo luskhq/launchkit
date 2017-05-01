@@ -1,16 +1,10 @@
-<!--
-TODO:
-- Add `protected` env feature to prevent accidental production deploys
-- `remove` command should be able to remove entire env
--->
-
 # LaunchKit
 
 ## Usage
 
 ```sh
-# Install gloablly
-npm install -g launchkit@alpha
+# Install globally
+yarn global add launchkit
 
 # See detailed usage instructions
 launchkit -h
@@ -20,30 +14,27 @@ launchkit -h
 
 ```js
 // The general schema of the file should look like this
-// Note that any config is deeply merged with "_default" if present
+// Note that any config is deeply merged with "default" if present
 MainConfig {
-  [configName]: Config
-  _default: Config
+  [envName]: EnvConfig,
+  default: EnvConfig,
 }
 
 // Individual configs for each branch
-Config {
-  provider: "provider-name"
-  config: ProviderConfig
+EnvConfig {
+  deployer: string,
+  protected: boolean,
+  options: DeployerOptions,
 }
 
-ProviderConfig {
+DeployerOptions {
   // ...any data that the provider might need to deploy
 }
 
 // Only the "now" provider is currently supported:
-
-NowProvider {
-  // token to use for deployment
-  token: "od3oi4oue0du3d0p9u"
-  // aliasing pattern, uses mustache with process.env
-  alias: "{{ANY_ENV_VAR}}.now.sh"
-  // vars to send along with the deploy
+NowDeployerOptions {
+  token: string
+  alias: string // aliasing pattern using mustache, see example below
   vars: {
     [TARGET_ENV_VAR]: ""
   }
@@ -53,35 +44,30 @@ NowProvider {
 ## Example Config File
 
 ```yaml
-_default:
+default:
   deployer: now
   options:
-    alias: '{{CIRCLE_PROJECT_REPONAME}}-{{CIRCLE_BRANCH}}.luskapps.net'
+    alias: '{{PROJECT_REPONAME}}-{{BRANCH}}.example.com'
     token: XxMTU7FBlszCFkMnzsAGhnho
     vars:
-      CAREERS_SITE: 'https://careers-site-dev.luskapps.net'
-      DATA_SERVICE: 'https://data-service-dev.luskapps.net'
-      PUBLIC_API: 'https://public-api-dev.luskapps.net'
+      CAREERS_SITE: 'https://careers-site-dev.example.com'
+      DATA_SERVICE: 'https://data-service-dev.example.com'
+      PUBLIC_API: 'https://public-api-dev.example.com'
 dev:
   options:
-    alias: '{{CIRCLE_PROJECT_REPONAME}}-dev.luskapps.net'
+    alias: '{{PROJECT_REPONAME}}-dev.example.com'
     vars:
-      CAREERS_SITE: 'https://careers-site.luskapps.net'
-      DATA_SERVICE: 'https://data-service.luskapps.net'
-      PUBLIC_API: 'https://public-api.luskapps.net'
+      CAREERS_SITE: 'https://careers-site.example.com'
+      DATA_SERVICE: 'https://data-service.example.com'
+      PUBLIC_API: 'https://public-api.example.com'
       SUPER_SECRET_TOKEN: beep
 production:
   options:
-    alias: '{{CIRCLE_PROJECT_REPONAME}}.luskapps.net'
+    alias: '{{PROJECT_REPONAME}}.example.com'
     vars:
-      CAREERS_SITE: 'https://careers-site.luskapps.net'
-      DATA_SERVICE: 'https://data-service.luskapps.net'
-      PUBLIC_API: 'https://public-api.luskapps.net'
+      CAREERS_SITE: 'https://careers-site.example.com'
+      DATA_SERVICE: 'https://data-service.example.com'
+      PUBLIC_API: 'https://public-api.example.com'
       SUPER_SECRET_TOKEN: foo
-rich-text:
-  options:
-    vars:
-      CAREERS_SITE: 'https://careers-site-rich-text.luskapps.net'
-      DATA_SERVICE: 'https://data-service-rich-text.luskapps.net'
 
 ```
