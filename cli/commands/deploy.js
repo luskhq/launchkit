@@ -45,14 +45,16 @@ const deploy = U.createCommand((args, options, logger) => {
   const performDeploy = async config => {
     const env = U.getMergedEnv(envName, config);
 
-    if (env.protected && !options.yes) {
-      // prettier-ignore
-      await confirm(`You're about to deploy a protected env \`${envName}\`. Are you sure?`);
-    }
+    if (!options.yes) {
+      if (env.protected) {
+        // prettier-ignore
+        await confirm(`You're about to deploy a protected env \`${envName}\`. Are you sure?`);
+      }
 
-    if (envName === "default") {
-      // prettier-ignore
-      await confirm("You're about to deploy the default env. Generally, it is not recommended to use the default env for deploys. Do you want to proceed?");
+      if (envName === "default") {
+        // prettier-ignore
+        await confirm("You're about to deploy the default env. Generally, it is not recommended to use the default env for deploys. Do you want to proceed?");
+      }
     }
 
     const deployerName = env.deployer;
