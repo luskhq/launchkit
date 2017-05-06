@@ -1,6 +1,6 @@
 {
   "name": "launchkit",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Deploy with ease",
   "main": "cli/index.js",
   "repository": {
