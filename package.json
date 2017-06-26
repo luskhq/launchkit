@@ -13,6 +13,9 @@
     "url": "https://github.com/luskhq/deployer/issues"
   },
   "homepage": "https://github.com/luskhq/deployer#readme",
+  "scripts": {
+    "test": "echo \"No tests ¯\\_(ツ)_/¯\" & exit 0"
+  },
   "dependencies": {
     "caporal": "^0.3.0",
     "chalk": "^1.1.3",
