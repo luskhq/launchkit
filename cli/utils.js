@@ -75,7 +75,6 @@ const encryptObject = R.curry((key, obj) => {
 
 const renderObject = R.curry((context, obj) => {
   const render = (value, prop) => {
-    console.log(`rendering ${value}`);
     return mustache.render(value, context);
   };
 

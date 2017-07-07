@@ -17,7 +17,7 @@ const deploy = (token, vars) =>
     token,
     ...envVars(vars),
     "--no-clipboard",
-    "deploy",
+    "deploy"
   ]);
 
 const alias = (token, fromURL, toURL) =>
