@@ -1,4 +1,5 @@
 const fs = require("fs");
+const mustache = require("mustache");
 const path = require("path");
 const R = require("ramda");
 const YAML = require("js-yaml");
@@ -72,9 +73,20 @@ const encryptObject = R.curry((key, obj) => {
   return processObject(value => encryptor.encrypt(value), obj);
 });
 
+const renderObject = R.curry((context, obj) => {
+  const render = (value, prop) => {
+    console.log(`rendering ${value}`);
+    return mustache.render(value, context);
+  };
+
+  return processObject(render, obj);
+});
+
 const decryptConfig = decryptObject;
 
 const encryptConfig = encryptObject;
+
+const renderConfig = renderObject;
 
 const createCommand = cb => (args, options, logger) => {
   try {
@@ -105,6 +117,7 @@ module.exports = {
   createCommand,
   decryptConfig,
   encryptConfig,
+  renderConfig,
   getMergedEnv,
-  dumpYAML,
+  dumpYAML
 };

@@ -14,8 +14,8 @@ const confirm = async message => {
       type: "confirm",
       name: "confirmed",
       message: yellow(message),
-      default: false,
-    },
+      default: false
+    }
   ]);
 
   if (!confirmed) {
@@ -62,7 +62,12 @@ const deploy = U.createCommand((args, options, logger) => {
     deployer(env.options, logger);
   };
 
-  R.pipe(U.readConfig, U.decryptConfig(key), performDeploy)(configPath);
+  R.pipe(
+    U.readConfig,
+    U.decryptConfig(key),
+    U.renderConfig(process.env),
+    performDeploy
+  )(configPath);
 });
 
 module.exports = deploy;
