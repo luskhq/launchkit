@@ -1,5 +1,4 @@
 const R = require("ramda");
-const mustache = require("mustache");
 const childProcess = require("child_process");
 const { green } = require("chalk");
 
@@ -18,7 +17,7 @@ const deploy = (token, vars) =>
     token,
     ...envVars(vars),
     "--no-clipboard",
-    "deploy",
+    "deploy"
   ]);
 
 const alias = (token, fromURL, toURL) =>
@@ -27,11 +26,10 @@ const alias = (token, fromURL, toURL) =>
 const now = (options, logger) => {
   logger.info("Deploying to ▲ now...");
 
-  const aliasURL = mustache.render(options.alias, process.env);
   const deployURL = deploy(options.token, options.vars).trim();
-  alias(options.token, deployURL, aliasURL);
+  alias(options.token, deployURL, options.alias);
 
-  logger.info(green("Success! Deployed to %s (%s)"), deployURL, aliasURL);
+  logger.info(green("Success! Deployed to %s (%s)"), deployURL, options.alias);
 };
 
 module.exports = now;

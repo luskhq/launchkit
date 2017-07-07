@@ -19,7 +19,7 @@ const deploy = (token, vars) => {
       token,
       ...envVars(vars),
       "--no-clipboard",
-      "deploy",
+      "deploy"
     ].join(" ")
   );
 
