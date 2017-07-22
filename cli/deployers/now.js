@@ -12,14 +12,7 @@ const envVars = R.compose(
 );
 
 const deploy = (token, vars) =>
-  run("now", [
-    "--force",
-    "--token",
-    token,
-    ...envVars(vars),
-    "--no-clipboard",
-    "deploy",
-  ]);
+  run("now", ["--token", token, ...envVars(vars), "--no-clipboard", "deploy"]);
 
 const alias = (token, fromURL, toURL) =>
   run("now", ["--token", token, "alias", fromURL, toURL]);
