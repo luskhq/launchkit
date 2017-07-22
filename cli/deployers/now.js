@@ -27,11 +27,21 @@ const alias = (token, fromURL, toURL) =>
 const now = (options, logger) => {
   logger.info("Deploying to ▲ now...");
 
-  const aliasURL = mustache.render(options.alias, process.env);
   const deployURL = deploy(options.token, options.vars).trim();
-  alias(options.token, deployURL, aliasURL);
 
-  logger.info(green("Success! Deployed to %s (%s)"), deployURL, aliasURL);
+  if (Array.isArray(options.alias)) {
+    const aliasURLs = options.alias.map(a => mustache.render(a, process.env));
+    aliasURLs.forEach(aliasURL => alias(options.token, deployURL, aliasURL));
+    logger.info(
+      green("Success! Deployed to %s (%s)"),
+      deployURL,
+      aliasURLs.join(", ")
+    );
+  } else {
+    const aliasURL = mustache.render(options.alias, process.env);
+    alias(options.token, deployURL, aliasURL);
+    logger.info(green("Success! Deployed to %s (%s)"), deployURL, aliasURL);
+  }
 };
 
 module.exports = now;

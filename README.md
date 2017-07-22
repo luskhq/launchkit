@@ -34,7 +34,9 @@ DeployerOptions {
 // Only the "now" provider is currently supported:
 NowDeployerOptions {
   token: string
-  alias: string // aliasing pattern using mustache, see example below
+  // Aliasing pattern using Mustache, see example below. Can also be a list
+  // of strings if you need to alias to multiple URLs.
+  alias: string
   vars: {
     [TARGET_ENV_VAR]: ""
   }
@@ -63,7 +65,9 @@ dev:
       SUPER_SECRET_TOKEN: beep
 production:
   options:
-    alias: '{{PROJECT_REPONAME}}.example.com'
+    alias:
+      - 'www.example.com'
+      - 'example.com'
     vars:
       CAREERS_SITE: 'https://careers-site.example.com'
       DATA_SERVICE: 'https://data-service.example.com'

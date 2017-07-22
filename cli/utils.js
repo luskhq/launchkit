@@ -41,6 +41,18 @@ const processObject = R.curry((cb, obj) => {
         // Do nothing with boolean values...
         break;
       case "object":
+        // This "object" is an array
+        if (Array.isArray(value)) {
+          obj[prop] = value.map((item, i) => {
+            if (typeof item === "string") {
+              return cb(item, `${prop}[${i}]`);
+            }
+
+            throw new Error(
+              `Unsupported type \`${typeof item}\` in array. Nested arrays must only contain strings.`
+            );
+          });
+        }
         obj[prop] = processObject(cb, value);
         break;
       default:

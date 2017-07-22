@@ -33,12 +33,21 @@ const alias = (token, fromURL, toURL) =>
 
 const test = (options, logger) => {
   logger.info("Using the test deployer");
-
-  const aliasURL = mustache.render(options.alias, process.env);
   const deployURL = deploy(options.token, options.vars).trim();
-  alias(options.token, deployURL, aliasURL);
 
-  logger.info(`Deployed to ${deployURL} (${aliasURL})`);
+  if (Array.isArray(options.alias)) {
+    const aliasURLs = options.alias.map(a => mustache.render(a, process.env));
+    aliasURLs.forEach(aliasURL => alias(options.token, deployURL, aliasURL));
+    logger.info(
+      "Success! Deployed to %s (%s)",
+      deployURL,
+      aliasURLs.join(", ")
+    );
+  } else {
+    const aliasURL = mustache.render(options.alias, process.env);
+    alias(options.token, deployURL, aliasURL);
+    logger.info("Success! Deployed to %s (%s)", deployURL, aliasURL);
+  }
 };
 
 module.exports = test;
