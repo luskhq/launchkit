@@ -19,12 +19,9 @@ const alias = (token, fromURL, toURL) =>
 
 const now = (options, logger) => {
   logger.info("Deploying to ▲ now...");
+  const vars = R.map(val => mustache.render(val, process.env), options.vars);
+  const deployURL = deploy(options.token, vars).trim();
 
-  const deployURL = deploy(options.token, options.vars).trim();
-
-  options.vars = R.map(val => mustache.render(val, process.env), options.vars);
-
-  console.log(options);
   if (Array.isArray(options.alias)) {
     const aliasURLs = options.alias.map(a => mustache.render(a, process.env));
     aliasURLs.forEach(aliasURL => alias(options.token, deployURL, aliasURL));
