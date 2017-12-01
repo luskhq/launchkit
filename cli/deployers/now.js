@@ -19,7 +19,22 @@ const alias = (token, fromURL, toURL) =>
 
 const now = (options, logger) => {
   logger.info("Deploying to ▲ now...");
-  const vars = R.map(val => mustache.render(val, process.env), options.vars);
+  const vars = R.map(val => {
+    console.log(val);
+    const type = R.type(val);
+    switch (type) {
+      case "String":
+        return mustache.render(val, process.env);
+      case "Array":
+        return val.map(
+          val =>
+            R.type(val) === "String" ? mustache.render(val, process.env) : val
+        );
+      default:
+        return val;
+    }
+  }, options.vars);
+
   const deployURL = deploy(options.token, vars).trim();
 
   if (Array.isArray(options.alias)) {
