@@ -20,7 +20,6 @@ const alias = (token, fromURL, toURL) =>
 const now = (options, logger) => {
   logger.info("Deploying to ▲ now...");
   const vars = R.map(val => {
-    console.log(val);
     const type = R.type(val);
     switch (type) {
       case "String":
